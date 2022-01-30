@@ -1,34 +1,20 @@
-import { LOGIN_FAILED, LOGIN_START, LOGIN_SUCCESS } from "./actionTypes";
-
-const initialAuthState={
-    user:{},
-    error:null,
-    isLoggedin:false,
-    inProgress:false
-};
-export default auth(state=initialAuthState,action){
-    switch(action.type){
-        case LOGIN_START:{
-            return{
-                ...state,
-                inProgress:true
-            }
-        }
-        case LOGIN_SUCCESS:
-            return{
-                ...state,
-                user:action.user,
-                isLoggedin:true,
-                inProgress:false,
-                error:null
-            }
-        case LOGIN_FAILED:
-            return{
-                ...state,
-                inProgress:false,
-                error:action.error
-                }
-    default:
-    return state;
-    }
+import { APIurls } from '../helpers/urls';
+import { LOGIN_START } from './actionTypes';
+import { getFormBody } from '../helpers/utils';
+export function startLogin() {
+  return {
+    type: LOGIN_START,
+  };
+}
+export function login(email,password) {
+  return (dispatch) => {
+    const url = APIurls.login();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: getFormBody({ email, password }),
+    });
+  };
 }
