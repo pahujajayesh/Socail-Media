@@ -6,9 +6,8 @@ import { fetchPosts } from '../actions/posts';
 import Navbar from './Navbar';
 import Home from './Home';
 import Page404 from './Page404';
-const Login = (props) => {
-  return <div>Login</div>;
-};
+import Login from './Login';
+
 const Signup = () => <div>signup</div>;
 
 class App extends Component {
