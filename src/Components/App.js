@@ -8,12 +8,18 @@ import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
-
-
+import * as jwtDecode from 'jwt-decode';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
+   const token = localStorage.getItem('token');
+
+   if (token) {
+     const user = jwtDecode(token);
+
+     console.log('user', user);
+   }
   }
 
   render() {

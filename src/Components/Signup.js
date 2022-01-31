@@ -24,10 +24,8 @@ class Signup extends Component {
     console.log('this.state', this.state);
     const { email, password, confirm_password, name } = this.state;
 
-    if (email && password && confirm_password && name) {
-      
+    if (email && password && confirm_password && name) {  
       this.props.dispatch(startSingup());
-      console.log(this.state);
       this.props.dispatch(signup(email, password, confirm_password, name));
     }
   };
