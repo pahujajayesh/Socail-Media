@@ -7,6 +7,8 @@ import {
   SIGNUP_FAILED,
   SIGNUP_SUCCESS,
   SIGNUP_START,
+  AUTHENTICATE_USER,
+  LOG_OUT,
 } from './actionTypes';
 export function startLogin() {
   return {
@@ -98,4 +100,17 @@ export function signupSuccessful(user) {
     type: SIGNUP_SUCCESS,
     user,
   };
+}
+
+export function authenticateUser(user){
+  return{
+    type:AUTHENTICATE_USER,
+    user
+  }
+}
+
+export function logoutUser(){
+  return{
+    type:LOG_OUT
+  }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { fetchPosts } from '../actions/posts';
 import Navbar from './Navbar';
 import Home from './Home';
@@ -9,17 +9,24 @@ import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
 import * as jwtDecode from 'jwt-decode';
+import { authenticateUser } from '../actions/auth';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-   const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
-   if (token) {
-     const user = jwtDecode(token);
-
-     console.log('user', user);
-   }
+    if (token) {
+      const user = jwtDecode(token);
+      console.log('user', user);
+      this.props.dispatch(
+        authenticateUser({
+          email: user.email,
+          name: user.name,
+          _id: user._id,
+        })
+      );
+    }
   }
 
   render() {
