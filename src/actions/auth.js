@@ -9,6 +9,7 @@ import {
   SIGNUP_START,
   AUTHENTICATE_USER,
   LOG_OUT,
+  CLEAR_AUTH,
 } from './actionTypes';
 export function startLogin() {
   return {
@@ -112,5 +113,10 @@ export function authenticateUser(user){
 export function logoutUser(){
   return{
     type:LOG_OUT
+  }
+}
+export function clearAuthState(){
+  return{
+    type:CLEAR_AUTH
   }
 }
