@@ -1,5 +1,5 @@
 import { APIurls } from '../helpers/urls';
-import { getFormBody } from '../helpers/utils';
+import { getAuthTokenFromLocalStorage, getFormBody } from '../helpers/utils';
 import {
   LOGIN_START,
   LOGIN_SUCCESS,
@@ -10,6 +10,8 @@ import {
   AUTHENTICATE_USER,
   LOG_OUT,
   CLEAR_AUTH,
+  EDIT_USER_SUCCESSFUL,
+  EDIT_USER_FAILED,
 } from './actionTypes';
 export function startLogin() {
   return {
@@ -103,20 +105,64 @@ export function signupSuccessful(user) {
   };
 }
 
-export function authenticateUser(user){
-  return{
-    type:AUTHENTICATE_USER,
-    user
-  }
+export function authenticateUser(user) {
+  return {
+    type: AUTHENTICATE_USER,
+    user,
+  };
 }
 
-export function logoutUser(){
-  return{
-    type:LOG_OUT
-  }
+export function logoutUser() {
+  return {
+    type: LOG_OUT,
+  };
 }
-export function clearAuthState(){
-  return{
-    type:CLEAR_AUTH
-  }
+export function clearAuthState() {
+  return {
+    type: CLEAR_AUTH,
+  };
+}
+
+export function editUserSuccessful(user) {
+  return {
+    type: EDIT_USER_SUCCESSFUL,
+    user,
+  };
+}
+
+export function editUserFailed(error) {
+  return {
+    type: EDIT_USER_FAILED,
+    error,
+  };
+}
+
+export function editUser(name, password, confirmPassword, userId) {
+  return (dispatch) => {
+    const url = APIurls.editProfile();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+      body: getFormBody({
+        name,
+        password,
+        confirm_password: confirmPassword,
+        id: userId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log('data', data);
+          this.props.dispatch(editUserSuccessful(data.data.user));
+          if (data.data.token) {
+            localStorage.setItem('token', data.data.token);
+          }
+        }
+        this.props.dispatch(editUserFailed(data.message));
+      });
+  };
 }

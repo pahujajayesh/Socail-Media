@@ -16,6 +16,7 @@ import Signup from './Signup';
 import Settings from './Settings';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
+import { getAuthTokenFromLocalStorage } from '../helpers/utils';
 
 
 const PrivateRoute = (PrivateRouteProps) => {
@@ -37,7 +38,7 @@ const PrivateRoute = (PrivateRouteProps) => {
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchPosts());
-    const token = localStorage.getItem('token');
+    const token = getAuthTokenFromLocalStorage();
 
     if (token) {
       const user = jwtDecode(token);
