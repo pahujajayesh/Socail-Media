@@ -157,12 +157,13 @@ export function editUser(name, password, confirmPassword, userId) {
       .then((data) => {
         if (data.success) {
           console.log('data', data);
-          this.props.dispatch(editUserSuccessful(data.data.user));
+          dispatch(editUserSuccessful(data.data.user));
           if (data.data.token) {
             localStorage.setItem('token', data.data.token);
           }
+          return;
         }
-        this.props.dispatch(editUserFailed(data.message));
+        dispatch(editUserFailed(data.message));
       });
   };
 }
