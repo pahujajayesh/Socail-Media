@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-class UserProfile extends Component{
+class UserProfile extends Component {
+    componentDidMount() {
+      const{match}=this.props;
+      if(match.params.userId){
+          //dispatch an action to fetch the user
+      }
+    }
+    
   render() {
+    const {
+      match: { params },
+    } = this.props;
+    console.log('props:userProfile', params);
     return (
       <div className="settings">
         <div className="img-container">
