@@ -14,6 +14,7 @@ import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
 import Settings from './Settings';
+import UserProfile from './UserProfile';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
@@ -73,6 +74,11 @@ class App extends Component {
             <PrivateRoute
               path="/settings"
               component={Settings}
+              isLoggedin={auth.isLoggedin}
+            />
+            <PrivateRoute
+              path="/user"
+              component={UserProfile}
               isLoggedin={auth.isLoggedin}
             />
             <Route component={Page404} />
