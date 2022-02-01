@@ -13,10 +13,10 @@ import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
+import Settings from './Settings';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 
-const Settings = () => <div>Settings</div>;
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { isLoggedin, path, component: Component } = PrivateRouteProps;
