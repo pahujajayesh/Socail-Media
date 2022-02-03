@@ -25,7 +25,6 @@ class Signup extends Component {
 
   onFormSubmit = (e) => {
     e.preventDefault();
-    console.log('this.state', this.state);
     const { email, password, confirm_password, name } = this.state;
 
     if (email && password && confirm_password && name) {

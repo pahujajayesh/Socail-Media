@@ -43,7 +43,6 @@ class App extends Component {
 
     if (token) {
       const user = jwtDecode(token);
-      console.log('user', user);
       this.props.dispatch(
         authenticateUser({
           email: user.email,
@@ -55,7 +54,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('props', this.props);
     const { posts, auth } = this.props;
     return (
       <div>

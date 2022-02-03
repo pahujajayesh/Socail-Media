@@ -5,11 +5,9 @@ export function fetchPosts() {
     const url = APIurls.fetchPosts();
     fetch(url)
       .then((response) => {
-        console.log('response', response);
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         dispatch(updatePosts(data.data.posts));
       });
   };
