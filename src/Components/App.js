@@ -18,7 +18,7 @@ import UserProfile from './UserProfile';
 import * as jwtDecode from 'jwt-decode';
 import { authenticateUser } from '../actions/auth';
 import { getAuthTokenFromLocalStorage } from '../helpers/utils';
-
+import { fetchUserFriends } from '../actions/friends';
 
 const PrivateRoute = (PrivateRouteProps) => {
   const { isLoggedin, path, component: Component } = PrivateRouteProps;
@@ -50,11 +50,12 @@ class App extends Component {
           _id: user._id,
         })
       );
+       this.props.dispatch(fetchUserFriends());
     }
   }
 
   render() {
-    const { posts, auth } = this.props;
+    const { posts, auth, friends } = this.props;
     return (
       <div>
         <Router>
@@ -64,7 +65,14 @@ class App extends Component {
               exact
               path="/"
               render={(props) => {
-                return <Home {...props} posts={posts} />;
+                return (
+                  <Home
+                    friends={friends}
+                    isLoggedin={auth.isLoggedin}
+                    {...props}
+                    posts={posts}
+                  />
+                );
               }}
             />
             <Route path="/login" component={Login} />
@@ -90,6 +98,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 App.propTypes = {

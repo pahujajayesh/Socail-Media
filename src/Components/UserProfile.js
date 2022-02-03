@@ -13,11 +13,7 @@ class UserProfile extends Component {
   }
 
   render() {
-    const {
-      match: { params },
-      profile,
-    } = this.props;
-    console.log('this.props', params);
+    const { profile } = this.props;
     const user = profile.user;
 
     if (profile.inProgress) {
