@@ -1,5 +1,5 @@
 import { APIurls } from '../helpers/urls';
-import { UPDATE_POSTS,ADD_POST } from './actionTypes';
+import { UPDATE_POSTS,ADD_POST,ADD_COMMENT } from './actionTypes';
 import { getAuthTokenFromLocalStorage,getFormBody } from '../helpers/utils';
 export function fetchPosts() {
   return (dispatch) => {
@@ -45,5 +45,32 @@ export function createPost(content) {
           dispatch(addPost(data.data.post));
         }
       });
+  };
+}
+export function createComment(content, postId) {
+  return (dispatch) => {
+    const url = APIurls.createComment();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`,
+      },
+      body: getFormBody({ content, post_id: postId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(addComment(data.data.comment, postId));
+        }
+      });
+  };
+}
+
+export function addComment(comment, postId) {
+  return {
+    type: ADD_COMMENT,
+    comment,
+    postId,
   };
 }
