@@ -26,12 +26,18 @@ const PrivateRoute = (PrivateRouteProps) => {
     <Route
       path={path}
       render={(props) => {
-        return isLoggedin ? <Component {...props} /> : <Redirect to={{
-          pathname:'/login',
-          state:{
-            from:props.location
-          }
-        }} />;
+        return isLoggedin ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: {
+                from: props.location,
+              },
+            }}
+          />
+        );
       }}
     />
   );
@@ -50,7 +56,7 @@ class App extends Component {
           _id: user._id,
         })
       );
-       this.props.dispatch(fetchUserFriends());
+      this.props.dispatch(fetchUserFriends());
     }
   }
 
