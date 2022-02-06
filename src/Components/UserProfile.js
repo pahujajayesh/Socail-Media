@@ -21,6 +21,23 @@ class UserProfile extends Component {
       this.props.dispatch(fetchUserProfile(match.params.userId));
     }
   }
+  componentDidUpdate(prevProps) {
+    const {
+      match: { params: prevParams },
+    } = prevProps;
+
+    const {
+      match: { params: currentParams },
+    } = this.props;
+
+    if (
+      prevParams &&
+      currentParams &&
+      prevParams.userId !== currentParams.userId
+    ) {
+      this.props.dispatch(fetchUserProfile(currentParams.userId));
+    }
+  }
   checkIfUserIsAFriend = () => {
     console.log('this.props', this.props);
     const { match, friends } = this.props;
@@ -102,7 +119,7 @@ class UserProfile extends Component {
       return <h1>Loading!</h1>;
     }
     const isUserAFriend = this.checkIfUserIsAFriend();
-    const { success, error,successMessage } = this.state;
+    const { success, error, successMessage } = this.state;
     return (
       <div className="settings">
         <div className="img-container">
@@ -139,9 +156,7 @@ class UserProfile extends Component {
             </button>
           )}
           {success && (
-            <div className="alert success-dailog">
-              {successMessage}
-            </div>
+            <div className="alert success-dailog">{successMessage}</div>
           )}
           {error && <div className="alert error-dailog">{error}</div>}
         </div>
